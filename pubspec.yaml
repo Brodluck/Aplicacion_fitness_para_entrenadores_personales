@@ -1,0 +1,42 @@
+name: ventanas
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.2.6 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.0.0 # For state management
+  image_picker: ^1.0.8 # For image uploading
+  charts_flutter: ^0.12.0 # For charts and graphs
+  flutter_bloc: ^8.0.1 # Alternative state management option
+  flutter_signin_button: ^2.0.0
+  flutter_plugin_android_lifecycle: ^2.0.7
+  font_awesome_flutter: ^9.2.0
+  intl_phone_field: ^3.2.0
+  shared_preferences: ^2.0.13
+  url_launcher: ^6.0.20
+  
+  firebase_core: ^2.25.4
+  cloud_firestore: ^4.15.8
+  firebase_auth: ^4.6.3
+  firebase_storage: ^11.2.4
+  google_sign_in: ^6.2.1
+  uuid: ^4.4.0
+  path_provider: ^2.0.11
+  pointycastle: ^3.4.0
+  connectivity_plus: ^2.3.0
+  csv: ^6.0.0
+  # health: ^3.0.6
+  # health_kit_reporter: ^2.1.1
+# follow guides: Google fit and Apple HealthKit
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true

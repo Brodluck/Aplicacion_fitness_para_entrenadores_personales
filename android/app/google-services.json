@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "845284348578",
+    "project_id": "fitness-tfg",
+    "storage_bucket": "fitness-tfg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845284348578:android:3c656862da8a8903977dfb",
+        "android_client_info": {
+          "package_name": "com.example.ventanas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845284348578-l84jtdr7k95pe6uu2nk8n3pjeb18sbfk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH3VfyFpVyV5MormV4ph3xEt92R-nFj_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845284348578-l84jtdr7k95pe6uu2nk8n3pjeb18sbfk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "845284348578-bbmkpaipt3kjncolk25sr9c12vc71qvr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ventanas"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
