@@ -1,36 +1,3 @@
-// import 'dart:io';
-// import 'package:csv/csv.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
-// import 'package:path_provider/path_provider.dart';
-
-// class CSVUtils {
-//   static Future<String> getFilePath() async {
-//     final directory = await getApplicationDocumentsDirectory();
-//     return '${directory.path}/data.csv';
-//   }
-
-//   static Future<void> saveToLocalCSV(List<List<dynamic>> data) async {
-//     final filePath = await getFilePath();
-//     final file = File(filePath);
-//     final csvData = const ListToCsvConverter().convert(data);
-//     await file.writeAsString(csvData);
-//   }
-
-//   static Future<List<List<dynamic>>> readFromLocalCSV() async {
-//     final filePath = await getFilePath();
-//     final file = File(filePath);
-//     final csvData = await file.readAsString();
-//     return const CsvToListConverter().convert(csvData);
-//   }
-
-//   static Future<void> uploadCSVToFirebase() async {
-//     final filePath = await getFilePath();
-//     final file = File(filePath);
-//     final storageRef = FirebaseStorage.instance.ref().child('data.csv');
-//     await storageRef.putFile(file);
-//   }
-// }
-
 // ignore_for_file: avoid_print
 
 // json_utils.dart
@@ -41,42 +8,42 @@ import 'package:path_provider/path_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class JsonUtils {
-  static Future<String> getFilePath() async {
+  static Future<String> getFilePath(String fileName) async {
     final directory = await getApplicationDocumentsDirectory();
-    return '${directory.path}/data.json';
+    return '${directory.path}/$fileName.json';
   }
 
-  static Future<void> saveToLocalJson(Map<String, dynamic> data) async {
-    final filePath = await getFilePath();
+  static Future<void> saveToLocalJson(String fileName, Map<String, dynamic> data) async {
+    final filePath = await getFilePath(fileName);
     final file = File(filePath);
     final jsonData = jsonEncode(data);
     await file.writeAsString(jsonData);
-    await uploadJsonToFirebase();  // Upload to Firebase Storage whenever the local file is updated
+    await uploadJsonToFirebase(fileName);  // Upload to Firebase Storage whenever the local file is updated
   }
 
-  static Future<Map<String, dynamic>> readFromLocalJson() async {
-    final filePath = await getFilePath();
+  static Future<Map<String, dynamic>> readFromLocalJson(String fileName) async {
+    final filePath = await getFilePath(fileName);
     final file = File(filePath);
     if (!await file.exists()) {
-      await saveToLocalJson({'users': []});
-      return {'users': []};
+      await saveToLocalJson(fileName, {});
+      return {};
     }
     final jsonData = await file.readAsString();
     return jsonDecode(jsonData);
   }
 
-  static Future<void> uploadJsonToFirebase() async {
-    final filePath = await getFilePath();
+  static Future<void> uploadJsonToFirebase(String fileName) async {
+    final filePath = await getFilePath(fileName);
     final file = File(filePath);
-    final storageRef = FirebaseStorage.instance.ref().child('data.json');
+    final storageRef = FirebaseStorage.instance.ref().child('$fileName.json');
     await storageRef.putFile(file);
   }
 
-  static Future<void> downloadJsonFromFirebase() async {
+  static Future<void> downloadJsonFromFirebase(String fileName) async {
     try {
-      final storageRef = FirebaseStorage.instance.ref().child('data.json');
+      final storageRef = FirebaseStorage.instance.ref().child('$fileName.json');
       final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/data.json');
+      final file = File('${directory.path}/$fileName.json');
       await storageRef.writeToFile(file);
       print('File downloaded from cloud storage.');
     } catch (e) {
@@ -84,13 +51,13 @@ class JsonUtils {
     }
   }
 
-  static Future<void> synchronizeJson() async {
+  static Future<void> synchronizeJson(String fileName) async {
     var connectivityResult = await Connectivity().checkConnectivity();
     bool connected = connectivityResult != ConnectivityResult.none;
 
     if (connected) {
       print('Connected to the internet. Synchronizing JSON file with cloud storage.');
-      await downloadJsonFromFirebase();
+      await downloadJsonFromFirebase(fileName);
     } else {
       print('No internet connection. Using local JSON file.');
     }

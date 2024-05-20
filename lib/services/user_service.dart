@@ -186,20 +186,77 @@
 // }
 
 //user_service.dart
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'dart:io';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:connectivity_plus/connectivity_plus.dart';
+// import '../models/user.dart';
+// import 'json_utils.dart';
+
+// class UserService {
+//   Future<void> _downloadFileFromCloud() async {
+//     try {
+//       final storageRef = FirebaseStorage.instance.ref().child('data.json');
+//       final directory = await getApplicationDocumentsDirectory();
+//       final file = File('${directory.path}/data.json');
+//       await storageRef.writeToFile(file);
+//       print('File downloaded from cloud storage.');
+//     } catch (e) {
+//       print('Error downloading file: $e');
+//     }
+//   }
+
+//   Future<List<User>> getAllUsers() async {
+//     var connectivityResult = await Connectivity().checkConnectivity();
+//     bool connected = connectivityResult != ConnectivityResult.none;
+
+//     if (connected) {
+//       print('Connected to the internet. Downloading file from cloud storage.');
+//       await _downloadFileFromCloud();
+//     } else {
+//       print('No internet connection. Using local JSON file.');
+//     }
+
+//     try {
+//       Map<String, dynamic> data = await JsonUtils.readFromLocalJson();
+//       if (data.containsKey('users')) {
+//         return (data['users'] as List).map((userMap) => User.fromMap(userMap)).toList();
+//       }
+//     } catch (e) {
+//       print('Error reading JSON file: $e');
+//     }
+
+//     return [];
+//   }
+
+//   Future<void> createUser(User user) async {
+//     List<User> users = await getAllUsers();
+//     users.add(user);
+//     Map<String, dynamic> data = {'users': users.map((user) => user.toMap()).toList()};
+//     await JsonUtils.saveToLocalJson(data);
+//     await JsonUtils.uploadJsonToFirebase();
+//   }
+
+//   Future<void> deleteUser(String id) async {
+//     List<User> users = await getAllUsers();
+//     users.removeWhere((user) => user.id == id);
+//     Map<String, dynamic> data = {'users': users.map((user) => user.toMap()).toList()};
+//     await JsonUtils.saveToLocalJson(data);
+//     await JsonUtils.uploadJsonToFirebase();
+//   }
+// }
+
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import '../models/user.dart';
 import 'json_utils.dart';
 
 class UserService {
+  static const String _dataFileName = 'data';
+
   Future<void> _downloadFileFromCloud() async {
     try {
-      final storageRef = FirebaseStorage.instance.ref().child('data.json');
-      final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/data.json');
-      await storageRef.writeToFile(file);
+      await JsonUtils.downloadJsonFromFirebase(_dataFileName);
       print('File downloaded from cloud storage.');
     } catch (e) {
       print('Error downloading file: $e');
@@ -218,7 +275,7 @@ class UserService {
     }
 
     try {
-      Map<String, dynamic> data = await JsonUtils.readFromLocalJson();
+      Map<String, dynamic> data = await JsonUtils.readFromLocalJson(_dataFileName);
       if (data.containsKey('users')) {
         return (data['users'] as List).map((userMap) => User.fromMap(userMap)).toList();
       }
@@ -233,15 +290,15 @@ class UserService {
     List<User> users = await getAllUsers();
     users.add(user);
     Map<String, dynamic> data = {'users': users.map((user) => user.toMap()).toList()};
-    await JsonUtils.saveToLocalJson(data);
-    await JsonUtils.uploadJsonToFirebase();
+    await JsonUtils.saveToLocalJson(_dataFileName, data);
+    await JsonUtils.uploadJsonToFirebase(_dataFileName);
   }
 
   Future<void> deleteUser(String id) async {
     List<User> users = await getAllUsers();
     users.removeWhere((user) => user.id == id);
     Map<String, dynamic> data = {'users': users.map((user) => user.toMap()).toList()};
-    await JsonUtils.saveToLocalJson(data);
-    await JsonUtils.uploadJsonToFirebase();
+    await JsonUtils.saveToLocalJson(_dataFileName, data);
+    await JsonUtils.uploadJsonToFirebase(_dataFileName);
   }
 }
