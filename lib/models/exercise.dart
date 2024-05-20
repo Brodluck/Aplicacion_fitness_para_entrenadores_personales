@@ -1,26 +1,52 @@
 // exercise.dart
+import 'package:ventanas/services/json_utils.dart';
+
 class Exercise {
-  final String id;
   final String name;
-  final String description;
-  final String videoUrl;
+  final String force;
+  final String level;
+  final String mechanic;
+  final String equipment;
+  final List<String> primaryMuscles;
+  final List<String> secondaryMuscles;
+  final List<String> instructions;
+  final String category;
+  final List<String> images;
+  final String id;
 
-  Exercise({required this.id, required this.name, required this.description, required this.videoUrl});
+  Exercise({
+    required this.name,
+    required this.force,
+    required this.level,
+    required this.mechanic,
+    required this.equipment,
+    required this.primaryMuscles,
+    required this.secondaryMuscles,
+    required this.instructions,
+    required this.category,
+    required this.images,
+    required this.id,
+  });
 
-  factory Exercise.fromMap(Map<String, dynamic> data, String id) {
+  factory Exercise.fromJson(Map<String, dynamic> json) {
     return Exercise(
-      id: id,
-      name: data['name'],
-      description: data['description'],
-      videoUrl: data['videoUrl'],
+      name: json['name'],
+      force: json['force'],
+      level: json['level'],
+      mechanic: json['mechanic'] ?? '',
+      equipment: json['equipment'],
+      primaryMuscles: List<String>.from(json['primaryMuscles']),
+      secondaryMuscles: List<String>.from(json['secondaryMuscles']),
+      instructions: List<String>.from(json['instructions']),
+      category: json['category'],
+      images: List<String>.from(json['images']),
+      id: json['id'],
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'description': description,
-      'videoUrl': videoUrl,
-    };
-  }
+}
+
+Future<List<Exercise>> loadExercises() async {
+  await JsonUtils.synchronizeJson('exercises');
+  return JsonUtils.readExercises();
 }

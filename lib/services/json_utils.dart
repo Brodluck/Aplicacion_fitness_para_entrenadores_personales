@@ -1,11 +1,11 @@
 // ignore_for_file: avoid_print
-
 // json_utils.dart
 import 'dart:io';
 import 'dart:convert';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:ventanas/models/exercise.dart';
 
 class JsonUtils {
   static Future<String> getFilePath(String fileName) async {
@@ -62,4 +62,15 @@ class JsonUtils {
       print('No internet connection. Using local JSON file.');
     }
   }
+
+  // New method to read exercises
+  static Future<List<Exercise>> readExercises({String fileName = "exercises"}) async {
+    final data = await readFromLocalJson(fileName);
+    if (data.isNotEmpty) {
+      final List exercisesJson = data['exercises'] ?? [];
+      return exercisesJson.map((json) => Exercise.fromJson(json)).toList();
+    }
+    return [];
+  }
 }
+

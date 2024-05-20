@@ -1,9 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ventanas/services/chat_service.dart';
 import 'package:ventanas/models/message.dart';
+import 'package:ventanas/widgets/client_messsage.dart';
+import 'package:ventanas/widgets/trainer_message.dart';
 
 class ChatScreen extends StatelessWidget {
   final String chatRoomId;
@@ -39,9 +40,11 @@ class ChatScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: FutureBuilder<List<Message>>(
-              future: chatService.getMessages(chatRoomId),
+            child: StreamBuilder<List<Message>>(
+              stream: chatService.getMessagesStream(chatRoomId),
               builder: (context, snapshot) {
+                // Debugging statements
+                print('StreamBuilder state: ${snapshot.connectionState}');
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
@@ -51,15 +54,17 @@ class ChatScreen extends StatelessWidget {
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return const Center(child: Text('No messages available'));
                 }
-
                 final messages = snapshot.data!;
                 return ListView.builder(
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     final message = messages[index];
-                    return ListTile(
-                      title: Text(message.content),
-                      subtitle: Text('From: ${message.senderId}'),
+                    final isTrainer = message.senderId == userId;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                      child: isTrainer
+                          ? TrainerMessage(message: message)
+                          : ClientMessage(message: message),
                     );
                   },
                 );

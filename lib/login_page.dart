@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ventanas/client_home_screen.dart';
@@ -103,7 +104,7 @@ class LoginPageState extends State<LoginPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _signInWithEmail,
-              child: const Text('Sign in with Email'),
+              child: const Text('Sign in'),
             ),
           ],
         ),

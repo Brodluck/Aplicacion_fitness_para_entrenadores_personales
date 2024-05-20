@@ -1,8 +1,22 @@
+import 'dart:async';
 import 'package:ventanas/models/message.dart';
 import 'package:ventanas/services/json_utils.dart';
 
 class ChatService {
   static const String _chatsFileName = 'chats';
+  final StreamController<List<Message>> _messageController = StreamController<List<Message>>.broadcast();
+
+  Stream<List<Message>> getMessagesStream(String chatRoomId) {
+    // Debugging statement
+    print('getMessagesStream called for chatRoomId: $chatRoomId');
+    _fetchAndAddMessages(chatRoomId); // Ensure initial fetch
+    return _messageController.stream;
+  }
+
+  Future<void> _fetchAndAddMessages(String chatRoomId) async {
+    final messages = await getMessages(chatRoomId);
+    _messageController.add(messages);
+  }
 
   Future<List<Map<String, dynamic>>> getChatRooms(String userId) async {
     await JsonUtils.synchronizeJson(_chatsFileName);
@@ -29,6 +43,8 @@ class ChatService {
         }
       }
     }
+    // Debugging statement
+    print('Fetched ${messages.length} messages for chatRoomId: $chatRoomId');
     return messages;
   }
 
@@ -37,6 +53,9 @@ class ChatService {
     final data = await JsonUtils.readFromLocalJson(_chatsFileName);
     data['messages'] = (data['messages'] ?? [])..add(message.toMap());
     await JsonUtils.saveToLocalJson(_chatsFileName, data);
+
+    // Get updated messages and add to the stream
+    _fetchAndAddMessages(message.chatRoomId);
   }
 
   Future<String> createChatRoom(List<String> participants) async {
@@ -63,5 +82,9 @@ class ChatService {
       timestamp: DateTime.now(),
     );
     await sendMessage(message);
+  }
+
+  void dispose() {
+    _messageController.close();
   }
 }
