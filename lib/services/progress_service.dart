@@ -35,7 +35,7 @@ class ProgressService {
     return File('$path/progress.csv');
   }
 
-  Future<void> _downloadFileFromCloud() async {
+  Future<void> _downloadFilesFromCloud() async {
     try {
       final storageRef = FirebaseStorage.instance.ref().child('progress.csv');
       final directory = await getApplicationDocumentsDirectory();
@@ -53,7 +53,7 @@ class ProgressService {
 
     if (connected) {
       print('Connected to the internet. Downloading file from cloud storage.');
-      await _downloadFileFromCloud();
+      await _downloadFilesFromCloud();
     } else {
       print('No internet connection. Using local CSV file.');
     }

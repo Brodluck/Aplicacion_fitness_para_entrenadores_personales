@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:ventanas/tabs/exercise_assignment_page.dart';
 import 'services/user_service.dart';
 import 'models/user.dart';
 import 'register_user_page.dart';
@@ -51,6 +52,14 @@ class _ClientManagementPageState extends State<ClientManagementPage> {
               icon: const Icon(Icons.delete),
               onPressed: () => _deleteClient(client.id),
             ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExerciseAssignmentPage(clientId: _clients[index].id),
+                ),
+              );
+            },
           );
         },
       ),

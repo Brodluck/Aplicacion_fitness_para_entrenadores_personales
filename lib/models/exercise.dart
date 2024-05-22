@@ -1,4 +1,6 @@
 // exercise.dart
+// ignore_for_file: avoid_print
+
 import 'package:ventanas/services/json_utils.dart';
 
 class Exercise {
@@ -30,23 +32,43 @@ class Exercise {
 
   factory Exercise.fromJson(Map<String, dynamic> json) {
     return Exercise(
-      name: json['name'],
-      force: json['force'],
-      level: json['level'],
-      mechanic: json['mechanic'] ?? '',
-      equipment: json['equipment'],
-      primaryMuscles: List<String>.from(json['primaryMuscles']),
-      secondaryMuscles: List<String>.from(json['secondaryMuscles']),
-      instructions: List<String>.from(json['instructions']),
-      category: json['category'],
-      images: List<String>.from(json['images']),
-      id: json['id'],
+      name: json['name'] ?? '',
+      force: json['force'] ?? '', // Maneja nulos
+      level: json['level'] ?? '',
+      mechanic: json['mechanic'] ?? '', // Maneja nulos
+      equipment: json['equipment'] ?? '', // Maneja nulos
+      primaryMuscles: List<String>.from(json['primaryMuscles'] ?? []),
+      secondaryMuscles: List<String>.from(json['secondaryMuscles'] ?? []),
+      instructions: List<String>.from(json['instructions'] ?? []),
+      category: json['category'] ?? '',
+      images: List<String>.from(json['images'] ?? []),
+      id: json['id'] ?? '',
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'force': force,
+      'level': level,
+      'mechanic': mechanic,
+      'equipment': equipment,
+      'primaryMuscles': primaryMuscles,
+      'secondaryMuscles': secondaryMuscles,
+      'instructions': instructions,
+      'category': category,
+      'images': images,
+      'id': id,
+    };
+  }
 }
 
 Future<List<Exercise>> loadExercises() async {
-  await JsonUtils.synchronizeJson('exercises');
-  return JsonUtils.readExercises();
+  List<Exercise> exercises = [];
+  try {
+    exercises = await JsonUtils.readExercises(); // Asegúrate de que este método esté correctamente definido y que retorne una lista de ejercicios.
+  } catch (e) {
+    print('Error loading exercises: $e');
+  }
+  return exercises;
 }

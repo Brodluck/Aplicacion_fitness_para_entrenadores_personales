@@ -16,6 +16,7 @@ void main() async {
   await Firebase.initializeApp();
   await JsonUtils.synchronizeJson('data'); // Ensure synchronization for user data
   await JsonUtils.synchronizeJson('chats'); // Ensure synchronization for chat data
+  await JsonUtils.synchronizeJson('exercises'); // Ensure synchronization for chat data
   await createDefaultTrainerUser();
   runApp(const MyApp());
 }

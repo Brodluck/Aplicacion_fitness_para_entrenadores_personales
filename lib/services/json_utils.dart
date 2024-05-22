@@ -1,11 +1,12 @@
 // ignore_for_file: avoid_print
-// json_utils.dart
 import 'dart:io';
 import 'dart:convert';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:ventanas/models/exercise.dart';
+import 'package:ventanas/models/user.dart';
+import 'package:ventanas/services/user_service.dart';
 
 class JsonUtils {
   static Future<String> getFilePath(String fileName) async {
@@ -13,20 +14,19 @@ class JsonUtils {
     return '${directory.path}/$fileName.json';
   }
 
-  static Future<void> saveToLocalJson(String fileName, Map<String, dynamic> data) async {
+  static Future<void> saveToLocalJson(String fileName, dynamic data) async {
     final filePath = await getFilePath(fileName);
     final file = File(filePath);
     final jsonData = jsonEncode(data);
     await file.writeAsString(jsonData);
-    await uploadJsonToFirebase(fileName);  // Upload to Firebase Storage whenever the local file is updated
   }
 
-  static Future<Map<String, dynamic>> readFromLocalJson(String fileName) async {
+  static Future<dynamic> readFromLocalJson(String fileName) async {
     final filePath = await getFilePath(fileName);
     final file = File(filePath);
     if (!await file.exists()) {
-      await saveToLocalJson(fileName, {});
-      return {};
+      await saveToLocalJson(fileName, {'users': []});
+      return {'users': []};
     }
     final jsonData = await file.readAsString();
     return jsonDecode(jsonData);
@@ -36,7 +36,9 @@ class JsonUtils {
     final filePath = await getFilePath(fileName);
     final file = File(filePath);
     final storageRef = FirebaseStorage.instance.ref().child('$fileName.json');
+    print('Uploading $filePath to Firebase...');
     await storageRef.putFile(file);
+    print('Upload complete.');
   }
 
   static Future<void> downloadJsonFromFirebase(String fileName) async {
@@ -63,14 +65,43 @@ class JsonUtils {
     }
   }
 
-  // New method to read exercises
   static Future<List<Exercise>> readExercises({String fileName = "exercises"}) async {
     final data = await readFromLocalJson(fileName);
-    if (data.isNotEmpty) {
-      final List exercisesJson = data['exercises'] ?? [];
-      return exercisesJson.map((json) => Exercise.fromJson(json)).toList();
+    if (data is List) {
+      return data.map((json) => Exercise.fromJson(json)).toList();
     }
     return [];
   }
-}
 
+  static Future<List<User>> readUsers({String fileName = "users_data"}) async {
+    return await UserService().getAllUsers();
+  }
+
+  static Future<void> saveUsers(List<User> users, {String fileName = "users_data"}) async {
+    final data = {'users': users.map((user) => user.toMap()).toList()};
+    await saveToLocalJson(fileName, data);
+    await uploadJsonToFirebase(fileName); // Ensure upload to Firebase after saving locally
+  }
+
+  static Future<void> updateUser(User updatedUser, {String fileName = "users_data"}) async {
+    List<User> users = await readUsers(fileName: fileName);
+    for (int i = 0; i < users.length; i++) {
+      if (users[i].id == updatedUser.id) {
+        users[i] = updatedUser;
+        break;
+      }
+    }
+    await saveUsers(users, fileName: fileName);
+  }
+
+  static Future<User?> getUserById(String id, {String fileName = "users_data"}) async {
+    List<User> users = await readUsers(fileName: fileName);
+    print("Users: $users");
+    for (var user in users) {
+      if (user.id == id) {
+        return user;
+      }
+    }
+    return null;
+  }
+}
