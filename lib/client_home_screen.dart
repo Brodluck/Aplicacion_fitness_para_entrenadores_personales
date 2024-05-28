@@ -20,8 +20,8 @@ class ClientHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
       const DashboardTab(),
-      const TrainingTab(),
-      const DietingTab(),
+      TrainingTab(clientId: userId),
+      DietingTab(clientId: userId),
       MessagesTab(userId: userId),
     ];
 
@@ -57,9 +57,10 @@ class ClientHomeScreen extends StatelessWidget {
             },
             child: const Padding(
               padding: EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-                backgroundColor: Colors.white,
+              child: Icon(
+                Icons.person,
+                size: 28.0, // Adjust size as needed
+                color: Colors.grey,
               ),
             ),
           ),

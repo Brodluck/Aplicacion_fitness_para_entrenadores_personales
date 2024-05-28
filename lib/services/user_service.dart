@@ -5,14 +5,14 @@ import '../models/user.dart';
 import 'json_utils.dart';
 
 class UserService {
-  static const String _dataFileName = 'users_data';
+  static const String _dataFileName = 'data';
   static const String _chatsFileName = 'chats';
   static const String _exercisesFileName = 'exercises';
 
   Future<void> _downloadFilesFromCloud() async {
     try {
       await JsonUtils.downloadJsonFromFirebase(_dataFileName);
-      print('File "users_data" downloaded from cloud storage.');
+      print('File "data" downloaded from cloud storage.');
       await JsonUtils.downloadJsonFromFirebase(_chatsFileName);
       print('File "chats" downloaded from cloud storage.');
       await JsonUtils.downloadJsonFromFirebase(_exercisesFileName);

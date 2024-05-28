@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:ventanas/models/exercise.dart';
 import 'package:ventanas/models/user.dart';
@@ -43,7 +45,7 @@ class _ExerciseAssignmentPageState extends State<ExerciseAssignmentPage> {
 
   void _assignExercise(Exercise exercise) {
     setState(() {
-      if (!_assignedExercises.contains(exercise)) {
+      if (!_assignedExercises.any((e) => e.id == exercise.id)) {
         _assignedExercises.add(exercise);
       }
     });
@@ -51,21 +53,22 @@ class _ExerciseAssignmentPageState extends State<ExerciseAssignmentPage> {
 
   void _removeAssignedExercise(Exercise exercise) {
     setState(() {
-      _assignedExercises.remove(exercise);
+      _assignedExercises.removeWhere((e) => e.id == exercise.id);
     });
   }
 
-  Future<void> _saveAssignedExercises() async {
-    print("Saving assigned exercises for client: ${widget.clientId}");
-    User? client = await JsonUtils.getUserById(widget.clientId);
-    if (client != null) {
-      print("Updating client: ${client.firstName} ${client.lastName} with assigned exercises: $_assignedExercises");
-      client.assignedExercises = _assignedExercises;
-      await JsonUtils.updateUser(client);
-    } else {
-      print("Client not found.");
-    }
+Future<void> _saveAssignedExercises() async {
+  print("Saving assigned exercises for client: ${widget.clientId}");
+  User? client = await JsonUtils.getUserById(widget.clientId);
+  if (client != null) {
+    print("Updating client: ${client.firstName} ${client.lastName} with assigned exercises: $_assignedExercises");
+    client.assignedExercises = _assignedExercises;
+    await JsonUtils.updateUser(client);
+    await JsonUtils.synchronizeJson("data");
+  } else {
+    print("Client not found.");
   }
+}
 
   @override
   Widget build(BuildContext context) {

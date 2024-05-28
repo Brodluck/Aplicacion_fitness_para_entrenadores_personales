@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +9,7 @@ import 'models/user.dart';
 import 'login_page.dart';
 import 'services/chat_service.dart';
 import 'services/json_utils.dart';
+import 'services/progress_service.dart'; // Add this import
 import 'trainer_home_screen.dart';
 import 'app_state.dart';
 
@@ -16,7 +18,7 @@ void main() async {
   await Firebase.initializeApp();
   await JsonUtils.synchronizeJson('data'); // Ensure synchronization for user data
   await JsonUtils.synchronizeJson('chats'); // Ensure synchronization for chat data
-  await JsonUtils.synchronizeJson('exercises'); // Ensure synchronization for chat data
+  await JsonUtils.synchronizeJson('exercises'); // Ensure synchronization for exercises data
   await createDefaultTrainerUser();
   runApp(const MyApp());
 }
@@ -53,6 +55,8 @@ Future<void> createDefaultTrainerUser() async {
       bodyFatPercentage: 0.0,
       password: defaultPassword,
       userType: 'trainer',
+      assignedExercises: [],
+      assignedDiets: [],
     );
 
     Map<String, dynamic> data = {'users': [defaultTrainer.toMap()]};
@@ -73,6 +77,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AppState()),
         Provider<ChatService>(create: (_) => ChatService()),
+        Provider<ProgressService>(create: (_) => ProgressService()), // Add this provider
       ],
       child: MaterialApp(
         title: 'Fitness App',

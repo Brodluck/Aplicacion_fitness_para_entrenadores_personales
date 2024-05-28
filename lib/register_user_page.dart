@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import '../models/user.dart';
-import '../services/json_utils.dart';
+import 'services/json_utils.dart';
 import 'client_management_page.dart';
 
 class RegisterUserPage extends StatefulWidget {
@@ -99,6 +99,8 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
         bodyFatPercentage: double.tryParse(_bodyFatPercentageController.text) ?? 0.0,
         password: hashedPassword,
         userType: 'client',
+        assignedExercises: [],
+        assignedDiets: [],
       );
 
       await _writeUserToFile(newUser);

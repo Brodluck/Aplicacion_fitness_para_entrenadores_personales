@@ -1,20 +1,3 @@
-// // progress_service.dart
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:ventanas/models/progress.dart';
-
-// class ProgressService {
-//   final FirebaseFirestore _db = FirebaseFirestore.instance;
-
-//   Stream<List<Progress>> getProgress(String userId) {
-//     return _db.collection('progress').where('userId', isEqualTo: userId).orderBy('date').snapshots().map((snapshot) => snapshot.docs.map((doc) => Progress.fromMap(doc.data(), doc.id)).toList());
-//   }
-
-//   Future<void> addProgress(Progress progress) {
-//     return _db.collection('progress').add(progress.toMap());
-//   }
-// }
-
-
 // ignore_for_file: avoid_print
 
 import 'dart:io';

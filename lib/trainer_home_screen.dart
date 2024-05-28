@@ -52,10 +52,14 @@ class TrainerHomeScreen extends StatelessWidget {
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: CircleAvatar(
-                backgroundImage: NetworkImage('https://via.placeholder.com/150'),
                 backgroundColor: Colors.white,
-              ),
-            ),
+                child: Icon(
+                  Icons.person, 
+                  size: 50.0,
+                  color: Colors.grey,
+                ),
+              )
+            )
           ),
         ],
       ),

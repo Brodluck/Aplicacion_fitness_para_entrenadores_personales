@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:pointycastle/digests/sha3.dart';
+import 'package:ventanas/models/diet.dart';
 import 'dart:typed_data';
-import 'exercise.dart'; // Importa la clase Exercise
+import 'exercise.dart';
 
 // Utility class for hashing passwords
 class PasswordUtils {
@@ -29,7 +30,8 @@ class User {
   double chestWidth;
   double bodyFatPercentage;
   final String userType;
-  List<Exercise> assignedExercises; // Nueva lista para ejercicios asignados
+  List<Exercise> assignedExercises;
+  List<Diet> assignedDiets;
 
   User({
     required this.id,
@@ -48,7 +50,8 @@ class User {
     this.chestWidth = 0.0,
     this.bodyFatPercentage = 0.0,
     required this.userType,
-    this.assignedExercises = const [], // Inicializa la lista de ejercicios asignados
+    this.assignedExercises = const [],
+    this.assignedDiets = const [],
   });
 
   Map<String, dynamic> toMap() {
@@ -70,6 +73,7 @@ class User {
       'password': password,
       'userType': userType,
       'assignedExercises': assignedExercises.map((e) => e.toJson()).toList(),
+      'assignedDiets': assignedDiets.map((d) => d.toJson()).toList(),
     };
   }
 
@@ -92,6 +96,7 @@ class User {
       password: password,
       userType: userType,
       assignedExercises: assignedExercises,
+      assignedDiets: assignedDiets,
     );
   }
 
@@ -132,6 +137,10 @@ class User {
       userType: map['userType'] ?? '',
       assignedExercises: (map['assignedExercises'] as List<dynamic>?)
               ?.map((e) => Exercise.fromJson(e))
+              .toList() ??
+          [],
+      assignedDiets: (map['assignedDiets'] as List<dynamic>?)
+              ?.map((d) => Diet.fromJson(d))
               .toList() ??
           [],
     );

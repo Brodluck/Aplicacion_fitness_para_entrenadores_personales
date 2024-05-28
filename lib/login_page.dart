@@ -20,7 +20,9 @@ class LoginPageState extends State<LoginPage> {
   Future<Map<String, dynamic>?> _getUserByEmail(String email) async {
     await JsonUtils.synchronizeJson('data');
     try {
-      Map<String, dynamic> data = await JsonUtils.readFromLocalJson('data');
+      Map<String, dynamic> data =
+          await JsonUtils.readFromLocalJson('data');
+      print('Data from JSON file: $data');
       if (data.containsKey('users')) {
         for (var userMap in data['users']) {
           if (userMap['email'] == email) {
@@ -44,7 +46,7 @@ class LoginPageState extends State<LoginPage> {
       String hashedPassword = PasswordUtils.hashPassword(password);
       print('Hashed input password: $hashedPassword');
       print('Stored user password: ${user['password']}');
-      
+
       if (user['password'] == hashedPassword) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login successful')),
@@ -60,25 +62,26 @@ class LoginPageState extends State<LoginPage> {
         if (userType == 'trainer') {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => TrainerHomeScreen(trainerId: userId)), // Pass trainerId
+            MaterialPageRoute(
+                builder: (context) =>
+                    TrainerHomeScreen(trainerId: userId)), // Pass trainerId
           );
         } else {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => ClientHomeScreen(userId: userId)),
+            MaterialPageRoute(
+                builder: (context) => ClientHomeScreen(userId: userId)),
           );
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Invalid password')),
         );
-        print('Invalid password');
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('User not found')),
       );
-      print('User not found');
     }
   }
 
