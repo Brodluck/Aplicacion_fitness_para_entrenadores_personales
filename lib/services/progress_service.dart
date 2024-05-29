@@ -24,7 +24,7 @@ class ProgressService {
       final directory = await getApplicationDocumentsDirectory();
       final file = File('${directory.path}/progress.csv');
       await storageRef.writeToFile(file);
-      print('File downloaded from cloud storage.');
+      print('File progress.csv downloaded from cloud storage.');
     } catch (e) {
       print('Error downloading file: $e');
     }
@@ -36,7 +36,7 @@ class ProgressService {
 
     if (connected) {
       print('Connected to the internet. Downloading file from cloud storage.');
-      await _downloadFilesFromCloud();
+      // await _downloadFilesFromCloud();
     } else {
       print('No internet connection. Using local CSV file.');
     }

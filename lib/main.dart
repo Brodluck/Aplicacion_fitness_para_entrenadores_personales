@@ -9,16 +9,17 @@ import 'models/user.dart';
 import 'login_page.dart';
 import 'services/chat_service.dart';
 import 'services/json_utils.dart';
-import 'services/progress_service.dart'; // Add this import
+import 'services/progress_service.dart';
 import 'trainer_home_screen.dart';
 import 'app_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await JsonUtils.synchronizeJson('data'); // Ensure synchronization for user data
-  await JsonUtils.synchronizeJson('chats'); // Ensure synchronization for chat data
-  await JsonUtils.synchronizeJson('exercises'); // Ensure synchronization for exercises data
+  await JsonUtils.synchronizeJson('data');
+  await JsonUtils.synchronizeJson('chats');
+  await JsonUtils.synchronizeJson('exercises');
+  await JsonUtils.synchronizeJson('diets');
   await createDefaultTrainerUser();
   runApp(const MyApp());
 }
@@ -75,14 +76,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AppState()),
+        ChangeNotifierProvider(create: (_) => AppState(numberOfTabs: 4)),
         Provider<ChatService>(create: (_) => ChatService()),
-        Provider<ProgressService>(create: (_) => ProgressService()), // Add this provider
+        Provider<ProgressService>(create: (_) => ProgressService()),
       ],
       child: MaterialApp(
         title: 'Fitness App',
-        theme: darkTheme, // Apply the dark theme here
-        home: const LoginPage(), // Start with the LoginPage
+        theme: darkTheme,
+        home: const LoginPage(),
         debugShowCheckedModeBanner: false,
       ),
     );
@@ -90,10 +91,10 @@ class MyApp extends StatelessWidget {
 }
 
 ThemeData darkTheme = ThemeData(
-  useMaterial3: true, // Enables Material 3
+  useMaterial3: true, 
   brightness: Brightness.dark,
   colorScheme: ColorScheme.fromSeed(
-    seedColor: Colors.blue, // Replace with your primary color
+    seedColor: Colors.blue,
     brightness: Brightness.dark,
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -104,13 +105,12 @@ ThemeData darkTheme = ThemeData(
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: Colors.white),
   ),
-  // Add other theming attributes as necessary
 );
 
 void checkUserSession(BuildContext context) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final String? userType = prefs.getString('userType');
-  final String? userId = prefs.getString('userId'); // Assuming userId is stored in SharedPreferences
+  final String? userId = prefs.getString('userId'); 
 
   if (userType != null && userId != null) {
     if (userType == 'trainer') {
