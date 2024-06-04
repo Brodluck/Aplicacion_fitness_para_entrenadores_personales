@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ventanas/services/chat_service.dart';
+import 'package:ventanas/services/json_utils.dart';
 import 'package:ventanas/services/user_service.dart';
 import 'package:ventanas/models/user.dart';
 import 'chat_screen.dart';
@@ -25,7 +26,7 @@ class TrainerMessagesTab extends StatelessWidget {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Create New Chat'),
-            content: Container(
+            content: SizedBox(
               width: double.maxFinite,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -115,18 +116,35 @@ class TrainerMessagesTab extends StatelessWidget {
                 return Container();
               }
 
-              return ListTile(
-                title: Text('Chat with ${participants.where((p) => p != trainerId).join(', ')}'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChatScreen(
-                        chatRoomId: chatRoom['id'],
-                        userId: trainerId,
-                        receiverId: receiverId,
-                      ),
-                    ),
+              return FutureBuilder<User?>(
+                future: JsonUtils.getUserById(receiverId),
+                builder: (context, userSnapshot) {
+                  if (userSnapshot.connectionState == ConnectionState.waiting) {
+                    return const ListTile(
+                      title: Text('Loading...'),
+                    );
+                  }
+                  if (userSnapshot.hasError || !userSnapshot.hasData) {
+                    return const ListTile(
+                      title: Text('Error loading user'),
+                    );
+                  }
+
+                  final user = userSnapshot.data!;
+                  return ListTile(
+                    title: Text('Chat with ${user.firstName} ${user.lastName}'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatScreen(
+                            chatRoomId: chatRoom['id'],
+                            userId: trainerId,
+                            receiverId: receiverId,
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
               );

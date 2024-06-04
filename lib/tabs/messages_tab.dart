@@ -1,8 +1,9 @@
 // ignore_for_file: use_build_context_synchronously, no_leading_underscores_for_local_identifiers
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ventanas/models/user.dart';
 import 'package:ventanas/services/chat_service.dart';
+import 'package:ventanas/services/json_utils.dart';
 import 'chat_screen.dart';
 
 class MessagesTab extends StatelessWidget {
@@ -37,18 +38,44 @@ class MessagesTab extends StatelessWidget {
             itemBuilder: (context, index) {
               final chatRoom = chatRooms[index];
               final participants = chatRoom['participants'];
-              return ListTile(
-                title: Text('Chat with ${participants.where((p) => p != userId).join(', ')}'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChatScreen(
-                        chatRoomId: chatRoom['id'],
-                        userId: userId,
-                        receiverId: participants.firstWhere((p) => p != userId),
-                      ),
-                    ),
+              final receiverId = participants.firstWhere(
+                (p) => p != userId,
+                orElse: () => null, 
+              );
+
+              if (receiverId == null) {
+                return Container();
+              }
+
+              return FutureBuilder<User?>(
+                future: JsonUtils.getUserById(receiverId),
+                builder: (context, userSnapshot) {
+                  if (userSnapshot.connectionState == ConnectionState.waiting) {
+                    return const ListTile(
+                      title: Text('Loading...'),
+                    );
+                  }
+                  if (userSnapshot.hasError || !userSnapshot.hasData) {
+                    return const ListTile(
+                      title: Text('Error loading user'),
+                    );
+                  }
+
+                  final user = userSnapshot.data!;
+                  return ListTile(
+                    title: Text('Chat with ${user.firstName} ${user.lastName}'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatScreen(
+                            chatRoomId: chatRoom['id'],
+                            userId: userId,
+                            receiverId: receiverId,
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
               );

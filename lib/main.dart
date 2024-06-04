@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AppState(numberOfTabs: 4)),
+        ChangeNotifierProvider(create: (_) => AppState(numberOfTabs: 3)),
         Provider<ChatService>(create: (_) => ChatService()),
         Provider<ProgressService>(create: (_) => ProgressService()),
       ],

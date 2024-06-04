@@ -19,7 +19,7 @@ class ClientHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
-      const DashboardTab(),
+      // const DashboardTab(),
       TrainingTab(clientId: userId),
       DietingTab(clientId: userId),
       MessagesTab(userId: userId),
@@ -77,7 +77,7 @@ class ClientHomeScreen extends StatelessWidget {
           appState.setIndex(index);
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Dashboard'),
+          // BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Dashboard'),
           BottomNavigationBarItem(icon: Icon(Icons.fitness_center), label: 'Training'),
           BottomNavigationBarItem(icon: Icon(Icons.restaurant_menu), label: 'Dieting'),
           BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Messages'),

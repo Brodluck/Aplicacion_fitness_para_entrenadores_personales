@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, avoid_print
+// ignore_for_file: library_private_types_in_public_api, prefer_final_fields, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:ventanas/models/exercise.dart';
@@ -27,6 +27,12 @@ class _ExerciseAssignmentPageState extends State<ExerciseAssignmentPage> {
     _loadExercises();
     _loadClient();
     _searchController.addListener(_filterExercises);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadExercises() async {
@@ -61,18 +67,18 @@ class _ExerciseAssignmentPageState extends State<ExerciseAssignmentPage> {
     });
   }
 
-Future<void> _saveAssignedExercises() async {
-  print("Saving assigned exercises for client: ${widget.clientId}");
-  User? client = await JsonUtils.getUserById(widget.clientId);
-  if (client != null) {
-    print("Updating client: ${client.firstName} ${client.lastName} with assigned exercises: $_assignedExercises");
-    client.assignedExercises = _assignedExercises;
-    await JsonUtils.updateUser(client);
-    await JsonUtils.synchronizeJson("data");
-  } else {
-    print("Client not found.");
+  Future<void> _saveAssignedExercises() async {
+    print("Saving assigned exercises for client: ${widget.clientId}");
+    User? client = await JsonUtils.getUserById(widget.clientId);
+    if (client != null) {
+      print("Updating client: ${client.firstName} ${client.lastName} with assigned exercises: $_assignedExercises");
+      client.assignedExercises = _assignedExercises;
+      await JsonUtils.updateUser(client);
+      await JsonUtils.synchronizeJson("data");
+    } else {
+      print("Client not found.");
+    }
   }
-}
 
   void _filterExercises() {
     String query = _searchController.text.toLowerCase();
@@ -127,6 +133,14 @@ Future<void> _saveAssignedExercises() async {
               itemBuilder: (context, index) {
                 Exercise exercise = _filteredExercises[index];
                 return ListTile(
+                  leading: exercise.images.isNotEmpty
+                      ? Image.asset(
+                          'assets/${exercise.images.first}',
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.error);
+                          },
+                        )
+                      : null,
                   title: Text(exercise.name),
                   subtitle: Text(exercise.category),
                   trailing: IconButton(
@@ -137,6 +151,12 @@ Future<void> _saveAssignedExercises() async {
                     onPressed: () {
                       _assignedExercises.contains(exercise) ? _removeAssignedExercise(exercise) : _assignExercise(exercise);
                     },
+                  ),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ExerciseDetailPage(exercise: exercise),
+                    ),
                   ),
                 );
               },
@@ -152,6 +172,14 @@ Future<void> _saveAssignedExercises() async {
               itemBuilder: (context, index) {
                 Exercise exercise = _assignedExercises[index];
                 return ListTile(
+                  leading: exercise.images.isNotEmpty
+                      ? Image.asset(
+                          'assets/${exercise.images.first}',
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.error);
+                          },
+                        )
+                      : null,
                   title: Text(exercise.name),
                   subtitle: Text(exercise.category),
                   trailing: IconButton(
@@ -161,11 +189,86 @@ Future<void> _saveAssignedExercises() async {
                       _removeAssignedExercise(exercise);
                     },
                   ),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ExerciseDetailPage(exercise: exercise),
+                    ),
+                  ),
                 );
               },
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ExerciseDetailPage extends StatefulWidget {
+  final Exercise exercise;
+
+  const ExerciseDetailPage({super.key, required this.exercise});
+
+  @override
+  _ExerciseDetailPageState createState() => _ExerciseDetailPageState();
+}
+
+class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
+  int _currentIndex = 0;
+
+  void _nextImage() {
+    setState(() {
+      _currentIndex = (_currentIndex + 1) % widget.exercise.images.length;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final exercise = widget.exercise;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(exercise.name),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (exercise.images.isNotEmpty)
+                GestureDetector(
+                  onTap: _nextImage,
+                  child: Image.asset(
+                    'assets/${exercise.images[_currentIndex]}',
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Text('Image not found');
+                    },
+                  ),
+                )
+              else
+                const Text('No images available'),
+              const SizedBox(height: 10),
+              Text('Category: ${exercise.category}', style: const TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              const Text('Instructions:'),
+              ...exercise.instructions.map((instruction) => Text('- $instruction')),
+              const SizedBox(height: 10),
+              Text('Primary Muscles: ${exercise.primaryMuscles.join(', ')}'),
+              const SizedBox(height: 10),
+              Text('Secondary Muscles: ${exercise.secondaryMuscles.join(', ')}'),
+              const SizedBox(height: 10),
+              Text('Level: ${exercise.level}'),
+              const SizedBox(height: 10),
+              Text('Equipment: ${exercise.equipment}'),
+              const SizedBox(height: 10),
+              Text('Mechanic: ${exercise.mechanic}'),
+              const SizedBox(height: 10),
+              Text('Force: ${exercise.force}'),
+            ],
+          ),
+        ),
       ),
     );
   }
