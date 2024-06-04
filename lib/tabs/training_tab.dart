@@ -9,10 +9,8 @@ class TrainingTab extends StatelessWidget {
   const TrainingTab({super.key, required this.clientId});
 
   Future<List<Exercise>> _loadClientExercises() async {
-    // Load all exercises
     List<Exercise> allExercises = await JsonUtils.readExercises();
 
-    // Load client data
     User? client = await JsonUtils.getUserById(clientId);
     if (client == null) {
       return [];

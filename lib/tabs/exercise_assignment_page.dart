@@ -17,19 +17,23 @@ class ExerciseAssignmentPage extends StatefulWidget {
 class _ExerciseAssignmentPageState extends State<ExerciseAssignmentPage> {
   List<Exercise> _exercises = [];
   List<Exercise> _assignedExercises = [];
+  List<Exercise> _filteredExercises = [];
   User? _client;
+  TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _loadExercises();
     _loadClient();
+    _searchController.addListener(_filterExercises);
   }
 
   Future<void> _loadExercises() async {
     List<Exercise> exercises = await JsonUtils.readExercises();
     setState(() {
       _exercises = exercises;
+      _filteredExercises = exercises;
     });
   }
 
@@ -70,6 +74,22 @@ Future<void> _saveAssignedExercises() async {
   }
 }
 
+  void _filterExercises() {
+    String query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredExercises = _exercises.where((exercise) {
+        bool matchesName = exercise.name.toLowerCase().contains(query);
+        bool matchesForce = exercise.force.toLowerCase().contains(query);
+        bool matchesLevel = exercise.level.toLowerCase().contains(query);
+        bool matchesMechanic = exercise.mechanic.toLowerCase().contains(query);
+        bool matchesEquipment = exercise.equipment.toLowerCase().contains(query);
+        bool matchesPrimaryMuscles = exercise.primaryMuscles.any((muscle) => muscle.toLowerCase().contains(query));
+        bool matchesCategory = exercise.category.toLowerCase().contains(query);
+        return matchesName || matchesForce || matchesLevel || matchesMechanic || matchesEquipment || matchesPrimaryMuscles || matchesCategory;
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,11 +110,22 @@ Future<void> _saveAssignedExercises() async {
             padding: EdgeInsets.all(8.0),
             child: Text('Select the exercises to assign:'),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: const InputDecoration(
+                labelText: 'Search',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.search),
+              ),
+            ),
+          ),
           Expanded(
             child: ListView.builder(
-              itemCount: _exercises.length,
+              itemCount: _filteredExercises.length,
               itemBuilder: (context, index) {
-                Exercise exercise = _exercises[index];
+                Exercise exercise = _filteredExercises[index];
                 return ListTile(
                   title: Text(exercise.name),
                   subtitle: Text(exercise.category),
