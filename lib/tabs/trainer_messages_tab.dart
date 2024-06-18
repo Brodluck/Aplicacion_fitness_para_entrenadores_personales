@@ -1,10 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ventanas/services/chat_service.dart';
 import 'package:ventanas/services/json_utils.dart';
-import 'package:ventanas/services/user_service.dart';
 import 'package:ventanas/models/user.dart';
+import 'package:ventanas/services/user_service.dart';
 import 'chat_screen.dart';
 
 class TrainerMessagesTab extends StatelessWidget {
@@ -82,9 +83,35 @@ class TrainerMessagesTab extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Messages'),
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _createChat(context),
+          GestureDetector(
+            onTap: () => _createChat(context),
+            child: Container(
+              margin: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.add, color: Colors.white),
+                  SizedBox(width: 5),
+                  Text(
+                    'Add Chat',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
@@ -120,8 +147,8 @@ class TrainerMessagesTab extends StatelessWidget {
                 future: JsonUtils.getUserById(receiverId),
                 builder: (context, userSnapshot) {
                   if (userSnapshot.connectionState == ConnectionState.waiting) {
-                    return const ListTile(
-                      title: Text('Loading...'),
+                    return const Center(
+                      child: CircularProgressIndicator(),
                     );
                   }
                   if (userSnapshot.hasError || !userSnapshot.hasData) {
@@ -131,8 +158,7 @@ class TrainerMessagesTab extends StatelessWidget {
                   }
 
                   final user = userSnapshot.data!;
-                  return ListTile(
-                    title: Text('Chat with ${user.firstName} ${user.lastName}'),
+                  return GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
@@ -145,6 +171,29 @@ class TrainerMessagesTab extends StatelessWidget {
                         ),
                       );
                     },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        '${user.firstName} ${user.lastName}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   );
                 },
               );

@@ -34,6 +34,14 @@ class JsonUtils {
     return jsonDecode(jsonData);
   }
 
+  static Future<String> uploadImageToFirebase(File imageFile) async {
+    final storageRef = FirebaseStorage.instance.ref().child('profile_images/${DateTime.now().millisecondsSinceEpoch}.jpg');
+    final uploadTask = storageRef.putFile(imageFile);
+    final snapshot = await uploadTask.whenComplete(() => null);
+    final downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
+  }
+
   static Future<void> uploadJsonToFirebase(String fileName) async {
     final filePath = await getFilePath(fileName);
     final file = File(filePath);

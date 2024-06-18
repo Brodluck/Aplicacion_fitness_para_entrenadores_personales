@@ -1,5 +1,4 @@
 // ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ventanas/models/user.dart';
@@ -49,11 +48,8 @@ class _ProfileTabState extends State<ProfileTab> {
 
   Future<void> _saveProfilePicture(User user) async {
     if (_imageFile != null) {
-      // Upload the image to a server or cloud storage
-      // Update user's photoUrl with the new image URL
-
-      // For simplicity, let's assume the new URL is saved directly
-      user.photoUrl = _imageFile!.path; // Replace this with actual URL after upload
+      String imageUrl = await JsonUtils.uploadImageToFirebase(_imageFile!);
+      user.photoUrl = imageUrl;
       await JsonUtils.updateUser(user);
     }
   }
@@ -89,8 +85,10 @@ class _ProfileTabState extends State<ProfileTab> {
           child: CircleAvatar(
             radius: 50,
             backgroundImage: user.photoUrl.isEmpty
-                ? const AssetImage('assets/default_user.png')
-                : FileImage(File(user.photoUrl)) as ImageProvider,
+                ? const AssetImage('assets/default_user_picture.png')
+                : user.photoUrl.startsWith('http')
+                    ? NetworkImage(user.photoUrl)
+                    : FileImage(File(user.photoUrl)) as ImageProvider,
           ),
         ),
         const SizedBox(height: 16),

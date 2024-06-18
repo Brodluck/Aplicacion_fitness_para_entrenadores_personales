@@ -7,8 +7,18 @@ class Progress {
   final DateTime date;
   final double weight;
   final double bodyFat;
+  final String dietsFollowed;
+  final String observations;
 
-  Progress({required this.id, required this.userId, required this.date, required this.weight, required this.bodyFat});
+  Progress( 
+      {required this.id,
+      required this.userId,
+      required this.date,
+      required this.weight,
+      required this.bodyFat,
+      required this.dietsFollowed,
+      required this.observations,
+      });
 
   factory Progress.fromMap(Map<String, dynamic> data, String id) {
     return Progress(
@@ -17,6 +27,8 @@ class Progress {
       date: (data['date'] as Timestamp).toDate(),
       weight: data['weight'],
       bodyFat: data['bodyFat'],
+      observations: data['observations'],
+      dietsFollowed: data['dietsFollowed'],
     );
   }
 
@@ -26,6 +38,8 @@ class Progress {
       'date': Timestamp.fromDate(date),
       'weight': weight,
       'bodyFat': bodyFat,
+      'observations': observations,
+      'dietsFollowed': dietsFollowed,
     };
   }
 }

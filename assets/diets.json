@@ -1,0 +1,452 @@
+[
+    {
+        "id": "1",
+        "name": "Keto Diet",
+        "foods": [
+            "Avocado",
+            "Chicken Breast",
+            "Broccoli",
+            "Olive Oil",
+            "Cheese"
+        ],
+        "description": "A high-fat, low-carbohydrate diet.",
+        "calories": 2000,
+        "protein": 150,
+        "carbs": 50,
+        "fats": 130,
+        "dailyMeals": {
+            "Monday": {
+                "breakfast": "Avocado Salad",
+                "lunch": "Grilled Chicken",
+                "dinner": "Broccoli Stir Fry"
+            },
+            "Tuesday": {
+                "breakfast": "Cheese Omelette",
+                "lunch": "Chicken Breast",
+                "dinner": "Avocado Smoothie"
+            },
+            "Wednesday": {
+                "breakfast": "Avocado Toast",
+                "lunch": "Broccoli Soup",
+                "dinner": "Cheese Salad"
+            },
+            "Thursday": {
+                "breakfast": "Chicken Salad",
+                "lunch": "Avocado Dip",
+                "dinner": "Broccoli Casserole"
+            },
+            "Friday": {
+                "breakfast": "Cheese Plate",
+                "lunch": "Grilled Chicken",
+                "dinner": "Avocado Salsa"
+            },
+            "Saturday": {
+                "breakfast": "Avocado Wrap",
+                "lunch": "Chicken Soup",
+                "dinner": "Broccoli Bake"
+            },
+            "Sunday": {
+                "breakfast": "Avocado Soup",
+                "lunch": "Chicken Skewers",
+                "dinner": "Broccoli Salad"
+            }
+        }
+    },
+    {
+        "id": "2",
+        "name": "Vegan Diet",
+        "foods": [
+            "Tofu",
+            "Lentils",
+            "Spinach",
+            "Quinoa",
+            "Almond Milk"
+        ],
+        "description": "A diet that excludes all animal products.",
+        "calories": 1800,
+        "protein": 100,
+        "carbs": 200,
+        "fats": 60,
+        "dailyMeals": {
+            "Monday": {
+                "breakfast": "Tofu Scramble",
+                "lunch": "Lentil Soup",
+                "dinner": "Spinach Salad"
+            },
+            "Tuesday": {
+                "breakfast": "Quinoa Salad",
+                "lunch": "Tofu Stir Fry",
+                "dinner": "Almond Milk Smoothie"
+            },
+            "Wednesday": {
+                "breakfast": "Spinach Wrap",
+                "lunch": "Lentil Curry",
+                "dinner": "Quinoa Bowl"
+            },
+            "Thursday": {
+                "breakfast": "Tofu Tacos",
+                "lunch": "Spinach Dip",
+                "dinner": "Lentil Burgers"
+            },
+            "Friday": {
+                "breakfast": "Quinoa Porridge",
+                "lunch": "Tofu Nuggets",
+                "dinner": "Spinach Soup"
+            },
+            "Saturday": {
+                "breakfast": "Lentil Salad",
+                "lunch": "Tofu Skewers",
+                "dinner": "Quinoa Stir Fry"
+            },
+            "Sunday": {
+                "breakfast": "Spinach Smoothie",
+                "lunch": "Lentil Stew",
+                "dinner": "Quinoa Salad"
+            }
+        }
+    },
+    {
+        "id": "3",
+        "name": "Mediterranean Diet",
+        "foods": [
+            "Olive Oil",
+            "Fish",
+            "Whole Grains",
+            "Vegetables",
+            "Nuts"
+        ],
+        "description": "A diet inspired by the traditional eating habits of countries bordering the Mediterranean Sea.",
+        "calories": 2200,
+        "protein": 100,
+        "carbs": 250,
+        "fats": 90,
+        "dailyMeals": {
+            "Monday": {
+                "breakfast": "Omelette with Vegetables",
+                "lunch": "Grilled Fish with Quinoa",
+                "dinner": "Mediterranean Salad"
+            },
+            "Tuesday": {
+                "breakfast": "Greek Yogurt with Nuts and Honey",
+                "lunch": "Mediterranean Veggie Wrap",
+                "dinner": "Baked Chicken with Olives and Tomatoes"
+            },
+            "Wednesday": {
+                "breakfast": "Mediterranean Frittata",
+                "lunch": "Stuffed Bell Peppers",
+                "dinner": "Whole Grain Pasta with Pesto"
+            },
+            "Thursday": {
+                "breakfast": "Fruit Salad with Greek Yogurt",
+                "lunch": "Mediterranean Chickpea Salad",
+                "dinner": "Grilled Salmon with Lemon and Herbs"
+            },
+            "Friday": {
+                "breakfast": "Mediterranean Breakfast Bowl",
+                "lunch": "Quinoa Tabouli",
+                "dinner": "Vegetarian Moussaka"
+            },
+            "Saturday": {
+                "breakfast": "Mediterranean Oatmeal",
+                "lunch": "Mediterranean Veggie Pizza",
+                "dinner": "Grilled Shrimp with Mediterranean Salsa"
+            },
+            "Sunday": {
+                "breakfast": "Mediterranean Smoothie",
+                "lunch": "Mediterranean Stuffed Tomatoes",
+                "dinner": "Lemon Herb Roast Chicken"
+            }
+        }
+    },
+    {
+        "id": "4",
+        "name": "Paleo Diet",
+        "foods": [
+            "Lean Meats",
+            "Fish",
+            "Fruits",
+            "Vegetables",
+            "Nuts"
+        ],
+        "description": "A diet based on foods similar to what might have been eaten during the Paleolithic era.",
+        "calories": 1900,
+        "protein": 140,
+        "carbs": 150,
+        "fats": 80,
+        "dailyMeals": {
+            "Monday": {
+                "breakfast": "Paleo Breakfast Burrito",
+                "lunch": "Grilled Chicken Salad",
+                "dinner": "Baked Salmon with Roasted Vegetables"
+            },
+            "Tuesday": {
+                "breakfast": "Paleo Pancakes with Berries",
+                "lunch": "Turkey Lettuce Wraps",
+                "dinner": "Beef Stir Fry with Broccoli"
+            },
+            "Wednesday": {
+                "breakfast": "Paleo Smoothie Bowl",
+                "lunch": "Shrimp and Vegetable Skewers",
+                "dinner": "Zucchini Noodles with Pesto"
+            },
+            "Thursday": {
+                "breakfast": "Fruit and Nut Paleo Bars",
+                "lunch": "Cobb Salad with Grilled Steak",
+                "dinner": "Grilled Fish Tacos with Lettuce Wraps"
+            },
+            "Friday": {
+                "breakfast": "Paleo Breakfast Casserole",
+                "lunch": "Chicken Avocado Salad",
+                "dinner": "Turkey Meatballs with Marinara Sauce"
+            },
+            "Saturday": {
+                "breakfast": "Paleo Egg Muffins",
+                "lunch": "Beef and Vegetable Stir Fry",
+                "dinner": "Grilled Pork Chops with Apple Slaw"
+            },
+            "Sunday": {
+                "breakfast": "Sweet Potato Hash with Fried Eggs",
+                "lunch": "Salmon Salad with Avocado",
+                "dinner": "Stuffed Bell Peppers"
+            }
+        }
+    },
+    {
+        "id": "5",
+        "name": "DASH Diet",
+        "foods": [
+            "Fruits",
+            "Vegetables",
+            "Whole Grains",
+            "Lean Proteins",
+            "Low-Fat Dairy"
+        ],
+        "description": "A dietary approach to stop hypertension.",
+        "calories": 2100,
+        "protein": 120,
+        "carbs": 260,
+        "fats": 70,
+        "dailyMeals": {
+            "Monday": {
+                "breakfast": "Oatmeal with Berries",
+                "lunch": "Vegetable Stir Fry with Brown Rice",
+                "dinner": "Grilled Chicken Breast with Steamed Broccoli"
+            },
+            "Tuesday": {
+                "breakfast": "Whole Grain Toast with Avocado",
+                "lunch": "Spinach Salad with Grilled Salmon",
+                "dinner": "Turkey and Vegetable Soup"
+            },
+            "Wednesday": {
+                "breakfast": "Greek Yogurt with Honey and Almonds",
+                "lunch": "Quinoa Salad with Chickpeas",
+                "dinner": "Baked Cod with Roasted Vegetables"
+            },
+            "Thursday": {
+                "breakfast": "Fruit Smoothie with Spinach",
+                "lunch": "Whole Wheat Pita with Hummus and Vegetables",
+                "dinner": "Grilled Shrimp with Quinoa Pilaf"
+            },
+            "Friday": {
+                "breakfast": "Egg White Omelette with Vegetables",
+                "lunch": "Turkey and Avocado Wrap",
+                "dinner": "Vegetable Stir Fry with Tofu"
+            },
+            "Saturday": {
+                "breakfast": "Whole Grain Pancakes with Fresh Fruit",
+                "lunch": "Chicken Caesar Salad",
+                "dinner": "Salmon with Asparagus and Brown Rice"
+            },
+            "Sunday": {
+                "breakfast": "Muesli with Low-Fat Milk",
+                "lunch": "Vegetable and Bean Soup",
+                "dinner": "Grilled Steak with Roasted Potatoes and Green Beans"
+            }
+        }
+    },
+    {
+        "id": "6",
+        "name": "Flexitarian Diet",
+        "foods": [
+            "Fruits",
+            "Vegetables",
+            "Whole Grains",
+            "Plant-Based Proteins",
+            "Occasional Meat and Dairy"
+        ],
+        "description": "A flexible vegetarian approach that occasionally includes meat and dairy.",
+        "calories": 2000,
+        "protein": 110,
+        "carbs": 230,
+        "fats": 80,
+        "dailyMeals": {
+            "Monday": {
+                "breakfast": "Smoothie with Spinach, Banana, and Almond Milk",
+                "lunch": "Quinoa Salad with Black Beans",
+                "dinner": "Stir-Fried Tofu with Vegetables"
+            },
+            "Tuesday": {
+                "breakfast": "Whole Grain Toast with Avocado and Tomato",
+                "lunch": "Vegetable Stir Fry with Tofu",
+                "dinner": "Vegetarian Chili with Cornbread"
+            },
+            "Wednesday": {
+                "breakfast": "Oatmeal with Berries and Almonds",
+                "lunch": "Mediterranean Veggie Wrap",
+                "dinner": "Baked Salmon with Quinoa and Steamed Broccoli"
+            },
+            "Thursday": {
+                "breakfast": "Greek Yogurt with Honey and Walnuts",
+                "lunch": "Black Bean and Sweet Potato Tacos",
+                "dinner": "Pasta Primavera with Vegetables"
+            },
+            "Friday": {
+                "breakfast": "Fruit Salad with Cottage Cheese",
+                "lunch": "Vegetarian Sushi Rolls",
+                "dinner": "Grilled Chicken with Roasted Vegetables"
+            },
+            "Saturday": {
+                "breakfast": "Scrambled Eggs with Spinach and Mushrooms",
+                "lunch": "Vegetarian Pad Thai",
+                "dinner": "Grilled Portobello Mushrooms with Quinoa Salad"
+            },
+            "Sunday": {
+                "breakfast": "Whole Grain Pancakes with Fresh Fruit",
+                "lunch": "Chickpea Salad Sandwich",
+                "dinner": "Vegetarian Pizza with Whole Wheat Crust"
+            }
+        }
+    },
+    {
+        "id": "7",
+        "name": "Low FODMAP Diet",
+        "foods": [
+            "Lactose-Free Dairy",
+            "Gluten-Free Grains",
+            "Low-FODMAP Fruits and Vegetables",
+            "Lean Proteins",
+            "Nuts and Seeds"
+        ],
+        "description": "A diet that restricts foods high in certain carbohydrates that can cause digestive discomfort.",
+        "calories": 1800,
+        "protein": 110,
+        "carbs": 200,
+        "fats": 70,
+        "dailyMeals": {
+            "Monday": {
+                "breakfast": "Quinoa Breakfast Bowl with Blueberries",
+                "lunch": "Turkey and Lettuce Wrap",
+                "dinner": "Grilled Salmon with Steamed Carrots and Rice"
+            },
+            "Tuesday": {
+                "breakfast": "Smoothie with Lactose-Free Yogurt and Banana",
+                "lunch": "Chicken and Vegetable Stir Fry with Rice Noodles",
+                "dinner": "Baked Chicken with Mashed Potatoes and Green Beans"
+            },
+            "Wednesday": {
+                "breakfast": "Scrambled Eggs with Spinach and Tomato",
+                "lunch": "Grilled Shrimp Salad with Low-FODMAP Vegetables",
+                "dinner": "Quinoa-Stuffed Bell Peppers"
+            },
+            "Thursday": {
+                "breakfast": "Oatmeal with Almond Milk and Strawberries",
+                "lunch": "Tuna Salad with Lettuce Wraps",
+                "dinner": "Turkey Meatballs with Gluten-Free Pasta"
+            },
+            "Friday": {
+                "breakfast": "Lactose-Free Cottage Cheese with Pineapple",
+                "lunch": "Turkey and Avocado Sandwich on Gluten-Free Bread",
+                "dinner": "Grilled Steak with Roasted Potatoes and Carrots"
+            },
+            "Saturday": {
+                "breakfast": "Blueberry Chia Pudding",
+                "lunch": "Salmon and Quinoa Salad",
+                "dinner": "Stir-Fried Tofu with Low-FODMAP Vegetables and Rice"
+            },
+            "Sunday": {
+                "breakfast": "Peanut Butter Banana Smoothie",
+                "lunch": "Quinoa and Grilled Vegetable Wrap",
+                "dinner": "Grilled Chicken with Baked Sweet Potato and Green Beans"
+            }
+        }
+    },
+    {
+        "id": "8",
+        "name": "Mass Gaining Diet",
+        "foods": [
+            "Chicken Breast",
+            "Beef",
+            "Salmon",
+            "Sweet Potatoes",
+            "Brown Rice",
+            "Broccoli",
+            "Olive Oil",
+            "Whole Milk",
+            "Almonds",
+            "Bananas"
+        ],
+        "description": "A diet designed to help individuals gain muscle mass and weight.",
+        "calories": 3000,
+        "protein": 200,
+        "carbs": 350,
+        "fats": 100,
+        "dailyMeals": {
+            "Monday": {
+                "breakfast": "Banana and Almond Butter Smoothie",
+                "midMorningSnack": "Greek Yogurt with Granola",
+                "lunch": "Grilled Chicken with Brown Rice and Broccoli",
+                "afternoonSnack": "Apple with Peanut Butter",
+                "dinner": "Salmon with Sweet Potato Mash and Green Beans",
+                "eveningSnack": "Protein Shake with Whole Milk"
+            },
+            "Tuesday": {
+                "breakfast": "Scrambled Eggs with Spinach and Whole Wheat Toast",
+                "midMorningSnack": "Cottage Cheese with Pineapple",
+                "lunch": "Beef Stir Fry with Quinoa",
+                "afternoonSnack": "Trail Mix (Nuts and Dried Fruits)",
+                "dinner": "Grilled Chicken with Sweet Potatoes and Asparagus",
+                "eveningSnack": "Greek Yogurt with Honey"
+            },
+            "Wednesday": {
+                "breakfast": "Oatmeal with Banana and Almonds",
+                "midMorningSnack": "Cheese and Crackers",
+                "lunch": "Salmon with Brown Rice and Steamed Vegetables",
+                "afternoonSnack": "Protein Bar",
+                "dinner": "Beef Stew with Potatoes and Carrots",
+                "eveningSnack": "Chocolate Milkshake"
+            },
+            "Thursday": {
+                "breakfast": "Whole Grain Pancakes with Berries and Maple Syrup",
+                "midMorningSnack": "Yogurt Parfait with Granola",
+                "lunch": "Grilled Chicken Wrap with Avocado and Salad",
+                "afternoonSnack": "Trail Mix (Nuts and Dried Fruits)",
+                "dinner": "Beef Burger with Sweet Potato Fries",
+                "eveningSnack": "Protein Shake with Whole Milk"
+            },
+            "Friday": {
+                "breakfast": "Smoothie with Protein Powder, Banana, and Peanut Butter",
+                "midMorningSnack": "Greek Yogurt with Almonds",
+                "lunch": "Salmon with Quinoa and Roasted Vegetables",
+                "afternoonSnack": "Cottage Cheese with Pineapple",
+                "dinner": "Beef Stir Fry with Brown Rice",
+                "eveningSnack": "Chocolate Chip Cookies and Milk"
+            },
+            "Saturday": {
+                "breakfast": "Scrambled Eggs with Bacon and Whole Wheat Toast",
+                "midMorningSnack": "Protein Bar",
+                "lunch": "Grilled Chicken with Sweet Potatoes and Green Beans",
+                "afternoonSnack": "Greek Yogurt with Honey and Almonds",
+                "dinner": "Beef Tacos with Avocado and Brown Rice",
+                "eveningSnack": "Protein Shake with Whole Milk"
+            },
+            "Sunday": {
+                "breakfast": "Peanut Butter and Banana Sandwich on Whole Wheat Bread",
+                "midMorningSnack": "Trail Mix (Nuts and Dried Fruits)",
+                "lunch": "Salmon with Quinoa Salad",
+                "afternoonSnack": "Greek Yogurt with Berries",
+                "dinner": "Beef Chili with Whole Grain Bread",
+                "eveningSnack": "Protein Shake with Whole Milk"
+            }
+        }
+    }
+]
