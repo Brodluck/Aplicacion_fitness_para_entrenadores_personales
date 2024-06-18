@@ -1,3 +1,2 @@
-# ventanas
+# Aplicación fitness para entrenadores personales
 
-A new Flutter project.
